@@ -1,6 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Initial setup
 
-## Getting Started
+Install both 
+Node v18(https://nodejs.org/en) and 
+Git(https://git-scm.com/download/mac) 
+on your machine if you haven't yet, the Node installation comes with NPM
+which will be used for package installation. Git will be required for git repo management
+
+
+## Getting APP Started
 
 First, run the development server:
 
