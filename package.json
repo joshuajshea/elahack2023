@@ -6,22 +6,28 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sequelize": "dotenv sequelize"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.3.0",
+    "next": "13.5.6",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "13.5.6"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
-    "postcss": "^8",
-    "tailwindcss": "^3",
     "eslint": "^8",
-    "eslint-config-next": "13.5.6"
+    "eslint-config-next": "13.5.6",
+    "mysql2": "^3.6.2",
+    "postcss": "^8",
+    "sequelize": "^6.33.0",
+    "sequelize-cli": "^6.6.1",
+    "tailwindcss": "^3",
+    "typescript": "^5"
   }
 }
