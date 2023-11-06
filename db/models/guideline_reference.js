@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class guidelines_reference extends Model {
+  class guideline_reference extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,17 +13,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  guidelines_reference.init({
+  guideline_reference.init({
     chemical: DataTypes.STRING,
     upper_limit: DataTypes.DOUBLE,
     lower_limit: DataTypes.DOUBLE,
+    units: DataTypes.STRING,
     type: DataTypes.STRING,
     org: DataTypes.STRING,
     exceeds_upper_limit_message: DataTypes.TEXT,
     exceeds_lower_limit_message: DataTypes.TEXT
   }, {
     sequelize,
-    modelName: 'guidelines_reference',
+    modelName: 'guideline_reference',
   });
-  return guidelines_reference;
+  return guideline_reference;
 };
