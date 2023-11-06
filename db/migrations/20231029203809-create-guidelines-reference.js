@@ -18,6 +18,9 @@ module.exports = {
       lower_limit: {
         type: Sequelize.DOUBLE
       },
+      units: {
+        type: Sequelize.STRING
+      },
       type: {
         type: Sequelize.ENUM('DRINK', 'ECO')
       },
@@ -32,15 +35,17 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('guidelines_references');
+    await queryInterface.dropTable('guideline_references');
   }
 };

@@ -1,7 +1,10 @@
 'use client';
+import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 
 export default function FileUpload() {
+    const [guidelines, setGuidelines] = useState<any>(null);
+    const [workbook, setWorkbook] = useState<FileRow[]>([]);
 
     interface FileRow {
         als_sample_id?: string;
@@ -23,7 +26,7 @@ export default function FileUpload() {
         units?: string;
     }
 
-    const parseWorkbook = (workbook: XLSX.WorkBook) => {
+    function parseWorkbook(workbook: XLSX.WorkBook) {
         const report = workbook.Sheets?.["Detailed Report"]
         if(!report) return;
         const range = report['!autofilter']?.ref.split(':');
@@ -36,7 +39,6 @@ export default function FileUpload() {
 
         for(let i = sheetAlphaRange[0]; i <= sheetAlphaRange[1]; i++) {
                 let cell: string = `${String.fromCharCode(i)}9`
-                console.log(cell);
                 headers.push(
                     (report[cell]?.v)
                         .toString()
@@ -58,7 +60,7 @@ export default function FileUpload() {
         results = results.filter(result => !!result.als_sample_id);
 
         //TODO: BUILD API TO UPLODD THIS TO DB
-        return results;
+        setWorkbook(results);
     }
 
     const handleDropAsync = (e: any) => {
@@ -72,10 +74,32 @@ export default function FileUpload() {
         reader.readAsArrayBuffer(file);
     }
 
+    useEffect(() => {
+        const fetchGuidelines = async () => {
+            const _guidelinesRequest = await fetch('/api', {method: 'GET'});
+            const _guidelines = await _guidelinesRequest.json();
+            setGuidelines(_guidelines.body);
+        }
+        fetchGuidelines();
+    }, []);
+
     return (
-    <div className="file-upload">
-        <form className="file-upload__upload" onSubmit={(e) => e.preventDefault()}>
-            <input type="file" id="input-file-upload" multiple={true} onChange={(e) => handleDropAsync(e)}/>
-        </form>
-    </div>);
+    <>
+       {workbook.length === 0 ? <div className="file-upload">
+            <form className="file-upload__upload" onSubmit={(e) => e.preventDefault()}>
+                <input type="file" id="input-file-upload" multiple={true} onChange={(e) => handleDropAsync(e)}/>
+            </form>
+        </div> : 
+        <div>
+            {workbook.map(row => 
+                <div>{JSON.stringify(row)}</div>
+            )}
+        </div>
+        }
+    <div>
+        <button onClick={() => setWorkbook([])}>
+            Clear
+        </button>
+    </div>
+    </>);
 }
