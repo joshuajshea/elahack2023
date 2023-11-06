@@ -34,7 +34,7 @@ export default function FileUpload() {
         exceeds_lower_limit_message: 'N/A'
       },
       {
-        chemical: 'Manganese',
+        chemical: 'Magnesium, total',
         upper_limit: '0.12',
         lower_limit: '0.0',
         units: 'mg/L',
@@ -55,7 +55,7 @@ export default function FileUpload() {
       },
       {
         chemical: 'pH',
-        upper_limit: '7.0',
+        upper_limit: '0.0',
         lower_limit: '10.5',
         units: 'N/A',
         type: 'ECO',
@@ -137,25 +137,37 @@ export default function FileUpload() {
 
 
 
-// take a measured valued from xlsx file
+// Purpose: for each workbook entry, its finds the corresponding guideline and collects 
+//    measurements that exceed a givien guideline into an array
 function compare() {
 
     var cRecord; //placeholder for current record
-    var cGuide //placeholder for current guideline
+    var cGuide; //placeholder for current guideline
+    var outliers =[]; //array of outliers
     
 
     for (var i=0; i<workbook.length; i++) {
         cRecord = workbook[i]; //current record
-        //console.log(cRecord);
+        console.log(cRecord); 
         for(var j=0; j<guidelines.length; j++) {
             cGuide = guidelines[j];
-            if ((cRecord['analyte'] == cGuide['chemical']) && (cRecord['results'])) {
+            if ((cRecord['analyte']?.includes(cGuide['chemical'])) && (cRecord['results'])) {
+
+              //attempting to parse 
+              try {
                 if (parseInt(cRecord['results']) > parseInt(cGuide['upper_limit'])) {
-                    console.log(cRecord.toString() + 'is too high\n' + cGuide['exceeds_upper_limit_message'])
+                  console.log(cRecord.toString() + 'is too high\n' + cGuide['exceeds_upper_limit_message']);
+                  outliers.push(cRecord);
                 }
                 if (parseInt(cRecord['results']) < parseInt(cGuide['lower_limit'])) {
-                    console.log(cRecord.toString() + 'is too low\n' + cGuide['exceeds_lower_limit_message'])
+                  console.log(cRecord.toString() + 'is too low\n' + cGuide['exceeds_lower_limit_message'])
+                  outliers.push(cRecord);
                 }
+              }
+              //
+              catch(err) {
+
+              }
             }
         }
     }
@@ -163,7 +175,7 @@ function compare() {
 compare();
 
 // compare that value with the hardcoded guidlines
-// add to an array of anaytes that are not within in the guidelines
+// add to an array of anaytes that are not within in the guidelines?
 // display said array to the the webpage
 
 
