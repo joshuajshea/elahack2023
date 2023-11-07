@@ -175,7 +175,7 @@ export default function FileUpload() {
                     cOutlier.exceeds_upper_limit_message = cRecord.exceeds_upper_limit_message;
                     cOutlier.upper_diff = parseFloat(cMatch[j].results as string) - parseFloat(cRecord.upper_limit);
                 }
-                console.log(cMatch[j], cOutlier, cRecord);
+
                 if(cOutlier.upper_diff && cOutlier.upper_diff > 0) {
                     _outliers.push(cOutlier);
                 }
