@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 
 export default function FileUpload() {
     //NOTE: We have the ability to create and populate a database but for the purpose of the demo we found it easier
-    //to hard code the data. If you uncomment the use effec below and set the db up with the migration files/seeder, this should function
+    //to hard code the data. If you uncomment the use effect below and set the db up with the migration files/seeder, this should function
     //identically
     //In addition, the data here may not be accurate, some of the data has been zero'd out so something will always trigger an upper_limit
     const [guidelines, setGuidelines] = useState<any>([{
@@ -15,7 +15,7 @@ export default function FileUpload() {
         units: 'mg/L',
         type: 'DRINK',
         org: 'CDNGOV',
-        exceeds_upper_limit_message: 'The ammount of Aluminum found in this sample can cause neuromuscular effects (hind- and fore-limb grip strength, foot splay), urinary tract effects and general toxicity when consumed. The Aluminum in this sample exceeds this value by',
+        exceeds_upper_limit_message: 'The amount of Aluminum found in this sample can cause neuromuscular effects (hind- and fore-limb grip strength, foot splay), urinary tract effects and general toxicity when consumed. The Aluminum in this sample exceeds this value by',
         exceeds_lower_limit_message: 'N/A'
       },
       {
@@ -25,7 +25,7 @@ export default function FileUpload() {
         units: 'mg/L',
         type: 'DRINK',
         org: 'CDNGOV',
-        exceeds_upper_limit_message: 'The ammount of Nitrite found in this sample can cause methaemoglobinaemia (blue baby syndrome) in bottle-fed infants less than 6 months of age. Identified as potential carcinogen.',
+        exceeds_upper_limit_message: 'The amount of Nitrite found in this sample can cause methaemoglobinaemia (blue baby syndrome) in bottle-fed infants less than 6 months of age. Identified as potential carcinogen.',
         exceeds_lower_limit_message: 'N/A'
       },
       {
@@ -35,7 +35,7 @@ export default function FileUpload() {
         units: 'mg/L',
         type: 'DRINK',
         org: 'CDNGOV',
-        exceeds_upper_limit_message: 'The ammount of Lead found in this sample can cause reduced intelligence in children measured as decreases in IQ is the most sensitive and well established health effect of lead exposure. There is no known safe exposure level to lead. Guidelines state as low as possible.',
+        exceeds_upper_limit_message: 'The amount of Lead found in this sample can cause reduced intelligence in children measured as decreases in IQ is the most sensitive and well established health effect of lead exposure. There is no known safe exposure level to lead. Guidelines state as low as possible.',
         exceeds_lower_limit_message: 'N/A'
       },
       {
@@ -45,7 +45,7 @@ export default function FileUpload() {
         units: 'mg/L',
         type: 'DRINK',
         org: 'CDNGOV',
-        exceeds_upper_limit_message: 'The ammount of Manganese found in this sample can cause effects on neurological development and behaviour; deficits in memory, attention, and motor skills.',
+        exceeds_upper_limit_message: 'The amount of Manganese found in this sample can cause effects on neurological development and behaviour; deficits in memory, attention, and motor skills.',
         exceeds_lower_limit_message: 'N/A'
       },
       {
@@ -55,7 +55,7 @@ export default function FileUpload() {
         units: 'mg/L',
         type: 'DRINK',
         org: 'CDNGOV',
-        exceeds_upper_limit_message: 'The ammount of Mercury found in this sample can cause irreversible neurological symptoms',
+        exceeds_upper_limit_message: 'The amount of Mercury found in this sample can cause irreversible neurological symptoms',
         exceeds_lower_limit_message: 'N/A'
       },
       {
@@ -65,7 +65,7 @@ export default function FileUpload() {
         units: 'mg/L',
         type: 'DRINK',
         org: 'CDNGOV',
-        exceeds_upper_limit_message: 'The ammount of Magnesium found in this sample can cause irreversible neurological symptoms. The Magnesium in this sample exceeds the recommended value by ',
+        exceeds_upper_limit_message: 'The amount of Magnesium found in this sample can cause irreversible neurological symptoms. The Magnesium in this sample exceeds the recommended value by ',
         exceeds_lower_limit_message: 'N/A'
       },
       {

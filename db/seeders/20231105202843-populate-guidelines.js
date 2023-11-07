@@ -10,7 +10,7 @@ module.exports = {
       units: 'mg/L',
       type: 'DRINK',
       org: 'CDNGOV',
-      exceeds_upper_limit_message: 'The ammount of Aluminum found in this sample can cause neuromuscular effects (hind- and fore-limb grip strength, foot splay), urinary tract effects and general toxicity when consumed.',
+      exceeds_upper_limit_message: 'The amount of Aluminum found in this sample can cause neuromuscular effects (hind- and fore-limb grip strength, foot splay), urinary tract effects and general toxicity when consumed.',
       exceeds_lower_limit_message: 'N/A'
     },
     {
@@ -20,7 +20,7 @@ module.exports = {
       units: 'mg/L',
       type: 'DRINK',
       org: 'CDNGOV',
-      exceeds_upper_limit_message: 'The ammount of Nitrite found in this sample can cause methaemoglobinaemia (blue baby syndrome) in bottle-fed infants less than 6 months of age. Identified as potential carcinogen.',
+      exceeds_upper_limit_message: 'The amount of Nitrite found in this sample can cause methaemoglobinaemia (blue baby syndrome) in bottle-fed infants less than 6 months of age. Identified as potential carcinogen.',
       exceeds_lower_limit_message: 'N/A'
     },
     {
@@ -30,7 +30,7 @@ module.exports = {
       units: 'mg/L',
       type: 'DRINK',
       org: 'CDNGOV',
-      exceeds_upper_limit_message: 'The ammount of Lead found in this sample can cause reduced intelligence in children measured as decreases in IQ is the most sensitive and well established health effect of lead exposure. There is no known safe exposure level to lead. Guidelines state as low as possible.',
+      exceeds_upper_limit_message: 'The amount of Lead found in this sample can cause reduced intelligence in children measured as decreases in IQ is the most sensitive and well established health effect of lead exposure. There is no known safe exposure level to lead. Guidelines state as low as possible.',
       exceeds_lower_limit_message: 'N/A'
     },
     {
@@ -40,7 +40,7 @@ module.exports = {
       units: 'mg/L',
       type: 'DRINK',
       org: 'CDNGOV',
-      exceeds_upper_limit_message: 'The ammount of Manganese found in this sample can cause effects on neurological development and behaviour; deficits in memory, attention, and motor skills.',
+      exceeds_upper_limit_message: 'The amount of Manganese found in this sample can cause effects on neurological development and behaviour; deficits in memory, attention, and motor skills.',
       exceeds_lower_limit_message: 'N/A'
     },
     {
@@ -50,7 +50,7 @@ module.exports = {
       units: 'mg/L',
       type: 'DRINK',
       org: 'CDNGOV',
-      exceeds_upper_limit_message: 'The ammount of Mercury found in this sample can cause irreversible neurological symptoms',
+      exceeds_upper_limit_message: 'The amount of Mercury found in this sample can cause irreversible neurological symptoms',
       exceeds_lower_limit_message: 'N/A'
     },
     {
