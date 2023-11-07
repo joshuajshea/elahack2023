@@ -1,10 +1,85 @@
 'use client';
+import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 
 export default function FileUpload() {
-    const [guidelines, setGuidelines] = useState<any>(null);
+    //NOTE: We have the ability to create and populate a database but for the purpose of the demo we found it easier
+    //to hard code the data. If you uncomment the use effec below and set the db up with the migration files/seeder, this should function
+    //identically
+    //In addition, the data here may not be accurate, some of the data has been zero'd out so something will always trigger an upper_limit
+    const [guidelines, setGuidelines] = useState<any>([{
+        chemical: 'Aluminum',
+        upper_limit: '0.0001',
+        lower_limit: '0.0',
+        units: 'mg/L',
+        type: 'DRINK',
+        org: 'CDNGOV',
+        exceeds_upper_limit_message: 'The ammount of Aluminum found in this sample can cause neuromuscular effects (hind- and fore-limb grip strength, foot splay), urinary tract effects and general toxicity when consumed. The Aluminum in this sample exceeds this value by',
+        exceeds_lower_limit_message: 'N/A'
+      },
+      {
+        chemical: 'Nitrite',
+        upper_limit: '1',
+        lower_limit: '0.0',
+        units: 'mg/L',
+        type: 'DRINK',
+        org: 'CDNGOV',
+        exceeds_upper_limit_message: 'The ammount of Nitrite found in this sample can cause methaemoglobinaemia (blue baby syndrome) in bottle-fed infants less than 6 months of age. Identified as potential carcinogen.',
+        exceeds_lower_limit_message: 'N/A'
+      },
+      {
+        chemical: 'Lead',
+        upper_limit: '0.005',
+        lower_limit: '0.0',
+        units: 'mg/L',
+        type: 'DRINK',
+        org: 'CDNGOV',
+        exceeds_upper_limit_message: 'The ammount of Lead found in this sample can cause reduced intelligence in children measured as decreases in IQ is the most sensitive and well established health effect of lead exposure. There is no known safe exposure level to lead. Guidelines state as low as possible.',
+        exceeds_lower_limit_message: 'N/A'
+      },
+      {
+        chemical: 'Manganese',
+        upper_limit: '0.12',
+        lower_limit: '0.0',
+        units: 'mg/L',
+        type: 'DRINK',
+        org: 'CDNGOV',
+        exceeds_upper_limit_message: 'The ammount of Manganese found in this sample can cause effects on neurological development and behaviour; deficits in memory, attention, and motor skills.',
+        exceeds_lower_limit_message: 'N/A'
+      },
+      {
+        chemical: 'Mercury',
+        upper_limit: '0.001',
+        lower_limit: '0.0',
+        units: 'mg/L',
+        type: 'DRINK',
+        org: 'CDNGOV',
+        exceeds_upper_limit_message: 'The ammount of Mercury found in this sample can cause irreversible neurological symptoms',
+        exceeds_lower_limit_message: 'N/A'
+      },
+      {
+        chemical: 'Magnesium',
+        upper_limit: '0.001',
+        lower_limit: '0.0',
+        units: 'mg/L',
+        type: 'DRINK',
+        org: 'CDNGOV',
+        exceeds_upper_limit_message: 'The ammount of Magnesium found in this sample can cause irreversible neurological symptoms. The Magnesium in this sample exceeds the recommended value by ',
+        exceeds_lower_limit_message: 'N/A'
+      },
+      {
+        chemical: 'pH',
+        upper_limit: '0.0',
+        lower_limit: '10.5',
+        units: 'N/A',
+        type: 'ECO',
+        org: 'CDNGOV',
+        exceeds_upper_limit_message: 'The control of pH is important to maximize treatment effectiveness, control corrosion and reduce leaching from distribution system and plumbing components. The pH in this sample exceeds this value by',
+        exceeds_lower_limit_message: 'The control of pH is important to maximize treatment effectiveness, control corrosion and reduce leaching from distribution system and plumbing components.'
+      }]);
     const [workbook, setWorkbook] = useState<FileRow[]>([]);
+    const [outliers, setOutliers] = useState<Outlier[]>([]);
 
     interface FileRow {
         als_sample_id?: string;
@@ -23,6 +98,15 @@ export default function FileUpload() {
         results?: string;
         "sub-matrix"?: string;
         time_sampled?: string;
+        units?: string;
+    }
+
+    interface Outlier {
+        name?: string;
+        exceeds_upper_limit_message?: string;
+        exceeds_lower_limit_message?: string;
+        upper_diff?: number;
+        lower_diff?: number;
         units?: string;
     }
 
@@ -46,7 +130,7 @@ export default function FileUpload() {
                         .trim()
                         .replaceAll(' ', '_'));
         }
-        for(let i = sheetBetaRange[0] + 10; i <= sheetBetaRange[1]; i++) {
+        for(let i = sheetBetaRange[0]; i <= sheetBetaRange[1]; i++) {
             let entry: FileRow = {};
             let k = 0;
             for(let j = sheetAlphaRange[0]; j <= sheetAlphaRange[1]; j++) {
@@ -56,10 +140,7 @@ export default function FileUpload() {
             }
             results.push(entry);
         }
-
         results = results.filter(result => !!result.als_sample_id);
-
-        //TODO: BUILD API TO UPLODD THIS TO DB
         setWorkbook(results);
     }
 
@@ -74,6 +155,44 @@ export default function FileUpload() {
         reader.readAsArrayBuffer(file);
     }
 
+    // Purpose: for each workbook entry, its finds the corresponding guideline and collects 
+    //    measurements that exceed a givien guideline into an array
+    function compare() {
+        var cRecord: any; //placeholder for current record
+        var cMatch; //placeholder for current guideline
+        var _outliers: any =[]; //array of outliers
+
+        for (let i=0; i < guidelines.length; i++) {
+            cRecord = guidelines[i]; //current record
+            cMatch = workbook.filter(w => w.analyte?.includes(cRecord.chemical));
+
+            for(let j=0; j < cMatch.length; j++) {
+                let cOutlier: Outlier = {name: cMatch[j].analyte, units: cMatch[j].units};
+                if(parseFloat(cMatch[j].results as string) < parseFloat(cRecord.lower_limit)) {
+                    cOutlier.exceeds_lower_limit_message = cRecord.exceeds_lower_limit_message;
+                }
+                if (parseFloat(cMatch[j].results as string) > parseFloat(cRecord.upper_limit)) {
+                    cOutlier.exceeds_upper_limit_message = cRecord.exceeds_upper_limit_message;
+                    cOutlier.upper_diff = parseFloat(cMatch[j].results as string) - parseFloat(cRecord.upper_limit);
+                }
+                console.log(cMatch[j], cOutlier, cRecord);
+                if(cOutlier.upper_diff && cOutlier.upper_diff > 0) {
+                    _outliers.push(cOutlier);
+                }
+            }
+        }
+        setOutliers(_outliers);
+    }
+
+    useEffect(() => {
+        document.title = "File Uploader"
+    }, []);
+
+    useEffect(() => {
+        if(workbook.length > 0) compare();
+    }, [workbook]);
+
+    /*
     useEffect(() => {
         const fetchGuidelines = async () => {
             const _guidelinesRequest = await fetch('/api', {method: 'GET'});
@@ -82,6 +201,7 @@ export default function FileUpload() {
         }
         fetchGuidelines();
     }, []);
+    */
 
     return (
     <>
@@ -105,10 +225,19 @@ export default function FileUpload() {
           </svg>
         </div>: 
         <div>
-            {workbook.map(row => 
-                <div>{JSON.stringify(row)}</div>
+            <div>
+            {outliers.map((row, index) => 
+                <div key={index.toString()} className="">
+                    <div className="header">
+                        <b>{row.name}</b>
+                    </div>
+                    <div className="message">
+                        {row.exceeds_upper_limit_message} {row.upper_diff} {row.units}
+                    </div>
+                </div>
             )}
-            <button onClick={() => setWorkbook([])} className="bg-gradient-to-br from-[#04619F] to-[#033c5a] text-white py-3 px-6 rounded-md transition-colors mt-4 hover:from-[#033c5a] hover:to-[#02253b] relative z-10">
+            </div>
+            <button onClick={() => {setWorkbook([]); setOutliers([])}} className="bg-gradient-to-br from-[#04619F] to-[#033c5a] text-white py-3 px-6 rounded-md transition-colors mt-4 hover:from-[#033c5a] hover:to-[#02253b] relative z-10">
                 Clear
             </button>
         </div>
