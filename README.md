@@ -23,21 +23,11 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## File Uploader
+To upload a file, click the button on the homepage and you should be navigated to the file uplaod page, from there you can upload any of the ALS sample lab results to see the correct output. We were using the 'Dryden Government Dock - June 21, 2023.xlsx' File for our purposes.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Notes
+This project in its current form is incomplete and as such contains a few artifacts that were intended to be used had the project met its larger goals
+- There is an underlying database with a seeder for test data, for ease of demo we opted to hardcode this, but the intention was to create a mechanism that allowed for users to edit guideline rules and have them persist for the file upload portion.
+- The file uploader currently only loads on the page and displays the guideline breaks as above. The intention was to store the ALS sample results in the DB and have an interactive map that was filterable by different chemical analyates in the future.
+- In addition, the file upload was intended to only happen once, and then the resutls could be referenced using the ALS sample ID on the webpage, the resulting page was intially intended to be downloadable as a PDF.
