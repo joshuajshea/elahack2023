@@ -24,7 +24,7 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## File Uploader
-To upload a file, click the button on the homepage and you should be navigated to the file uplaod page, from there you can upload any of the ALS sample lab results to see the correct output. We were using the 'Dryden Government Dock - June 21, 2023.xlsx' File for our purposes.
+To upload a file, click the button on the homepage and you should be navigated to the file uplaod page, from there you can upload any of the ALS sample lab results to see the correct output. We were using the 'Dryden Government Dock - June 21, 2023.xlsx' File for our purposes. This has been included in the repository for testing purposes.
 
 ## Notes
 This project in its current form is incomplete and as such contains a few artifacts that were intended to be used had the project met its larger goals
